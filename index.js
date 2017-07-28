@@ -66,15 +66,10 @@ app.delete('/users/:id', function (req, res) {
 });
 // curl -H "Content-Type: application/json" -X PUT -d '{"password":"xadazdazdyz"}' http://localhost:3000/users/08d9c9af-9839-4c35-8704-de0186b087ff
 app.put('/users/:id', function (req, res) {
-  function u (element) {
-    return element.id === req.params.id;
-  }
-  const userToUpdate = users.findIndex(u);
-  if (userToUpdate >= 0) {
-    const newPassword = req.body.password;
-    sha1NewPassword = sha1(newPassword);
-    users[userToUpdate].password = sha1NewPassword;
-    res.send(users[userToUpdate]);
+  const userIndex = users.findIndex((u)=>  u.id === req.params.id);
+  if(userIndex >= 0){
+    users[userIndex].password = sha1(req.body.password);
+    res.send(users[userIndex]);
   } else {
     res.sendStatus(404);
   }

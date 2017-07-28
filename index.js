@@ -36,23 +36,12 @@ app.get('/users/:id', function (req, res) {
 });
 
 app.post('/users/', function (req, res) {
-  // Creation users
-  const newUser = req.body;
-  sha1Password = sha1(newUser.password);
-  const userInfo = {
-    id: uuidv4(),
-    username: newUser.username,
-    password: sha1Password,
-  };
-  const existing = users.find(function(el) {
-    return el.username === userInfo.username;
-  });
-  if (!existing) {
-    users.push(userInfo);
-    res.send(userInfo);
-  } else {
-    res.sendStatus(418);
+  const reqUser = {username : req.body.username, password: sha1(req.body.password), id: uuid() };
+  if(!reqUser.username || !reqUser.password || users.find((u)=>  u.username === reqUser.username)){
+    return res.sendStatus(400);
   }
+  users.push(reqUser);
+  res.send(reqUser);
 });
 
 app.delete('/users/:id', function (req, res) {

@@ -56,12 +56,13 @@ app.post('/users/', function (req, res) {
 });
 
 app.delete('/users/:id', function (req, res) {
-  function u (element) {
-    return element.id === req.params.id;
+  const userIndex = users.findIndex((u)=>  u.id === req.params.id);
+  if(userIndex !==  undefined){
+    users.splice(userIndex, 1);
+    res.sendStatus(204);
+  } else {
+    res.sendStatus(404);
   }
-  const userToDelete = users.find(u);
-  users.splice(userToDelete, 1);
-  res.send(users);
 });
 
 app.put('/users/:id', function (req, res) {

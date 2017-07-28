@@ -60,11 +60,11 @@ app.delete('/users/:id', function (req, res) {
     return element.id === req.params.id;
   }
   const userToDelete = users.find(u);
-  res.send(userToDelete);
+  users.splice(userToDelete, 1);
+  res.send(users);
 });
 
-app.put('/users/', function (req, res) {
- // Update users
+app.put('/users/:id', function (req, res) {
 });
 
 app.listen(3000, function () {

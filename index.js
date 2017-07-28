@@ -55,12 +55,16 @@ app.post('/users/', function (req, res) {
   }
 });
 
-app.put('/users/', function (req, res) {
- // Update users
+app.delete('/users/:id', function (req, res) {
+  function u (element) {
+    return element.id === req.params.id;
+  }
+  const userToDelete = users.find(u);
+  res.send(userToDelete);
 });
 
-app.delete('/users/', function (req, res) {
- // Delete users
+app.put('/users/', function (req, res) {
+ // Update users
 });
 
 app.listen(3000, function () {
